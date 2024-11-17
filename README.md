@@ -1,11 +1,31 @@
-# groq_test_IA
-Test with model of the AI ​​from groq
+# CHAT LLM Context
 
-<a href="https://groq.com" target="_blank" rel="noopener noreferrer">
-  <img
-    src="https://groq.com/wp-content/uploads/2024/03/PBG-mark1-color.svg"
-    alt="Powered by Groq for fast inference."
-  />
-</a>
+### To Test It
 
+#### Install requirements
+    pip install -r requirements.txt
+
+#### Create an API Key from Groq:
+
+* link: https://console.groq.com/keys
+
+
+#### Add this API key to an environment variable in a .env file:
+    GROQ_API_KEY="Key"
+
+#### Run the App
+    python3 main.py
+
+## Deployment
+
+### The CHAT is already set up with Docker for deployment. Run the following commands:
+
+#### To Test
+    docker-compose up --build
+
+#### To Deploy
+    docker-compose up -d
+
+#### To Stop
+    docker-compose down
 

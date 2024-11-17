@@ -1,0 +1,13 @@
+version: '3'
+services:
+  flask_app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      GROQ_YAPI_KE: ${GROQ_YAPI_KE}
+
+    restart: always
+    volumes:
+      - .:/app
+    command: ["gunicorn", "--bind", ":5000", "--workers", "1", "--threads", "8", "--reload", "main:app"]

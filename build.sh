@@ -3,7 +3,7 @@
 VERSION=1
 MINOR=0
 PATCH=
-EXTRAVERSION="-rc2"
+EXTRAVERSION="-rc3"
 
 NOTES="(update)"
 BRANCH="dev"
