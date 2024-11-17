@@ -15,7 +15,7 @@ client = Groq(
 context = None
 chat_history = []
 MODEL = "llama3-8b-8192"
-VERSION = "1.0-rc3"
+VERSION = "1.0.0"
 
 @app.route("/", methods=["GET", "POST"])
 def index():

@@ -2,11 +2,11 @@
 
 VERSION=1
 MINOR=0
-PATCH=
-EXTRAVERSION="-rc3"
+PATCH=0
+EXTRAVERSION=""
 
-NOTES="(update)"
-BRANCH="dev"
+NOTES="(1.0.0 Released)"
+BRANCH="main"
 
 if [[ -z $PATCH ]]; then
     PATCH=""
