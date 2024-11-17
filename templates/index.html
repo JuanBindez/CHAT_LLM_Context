@@ -114,9 +114,9 @@
                     <div class="chat-message {{ 'message-user' if message.role == 'user' else 'message-assistant' }}">
                         <div class="message-text">
                             {% if message.role == 'user' %}
-                                <strong>Você:</strong> {{ message.content }}
+                                <strong>You:</strong> {{ message.content }}
                             {% else %}
-                                <strong>Modelo:</strong>
+                                <strong>Model:</strong>
                                 <div class="markdown-content">{{ message.content }}</div>
                             {% endif %}
                         </div>
