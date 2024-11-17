@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat com LM</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Highlight.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .chat-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .chat-header {
+            background-color: #0a3f77;
+            color: #ffffff;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .chat-body {
+            padding: 20px;
+            height: 500px;
+            overflow-y: auto;
+        }
+        .chat-message {
+            margin-bottom: 15px;
+        }
+        .message-user {
+            text-align: right;
+        }
+        .message-user .message-text {
+            display: inline-block;
+            background-color: #474747;
+            color: #ffffff;
+            padding: 10px 15px;
+            border-radius: 20px;
+        }
+        .message-assistant .message-text {
+            display: inline-block;
+            background-color: #272735;
+            color: #ffffff;
+            padding: 10px 15px;
+            border-radius: 20px;
+            white-space: pre-wrap;
+        }
+        .chat-footer {
+            padding: 15px;
+            border-top: 1px solid #e9ecef;
+            background-color: #0a3f77;
+        }
+        .chat-footer textarea {
+            resize: none;
+            height: 60px;
+            border-radius: 10px;
+        }
+        .chat-footer button {
+            margin-left: 10px;
+            background-color: #007bff;
+            color: #ffffff;
+        }
+        .chat-footer button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Header -->
+        <div class="chat-header">
+            Chat ML
+        </div>
+
+        <!-- Body -->
+        <div class="chat-body" id="chat-body">
+            {% for message in chat_history %}
+                <div class="chat-message {{ 'message-user' if message.role == 'user' else 'message-assistant' }}">
+                    <div class="message-text">
+                        {% if message.role == 'user' %}
+                            <strong>Você:</strong> {{ message.content }}
+                        {% else %}
+                            <strong>Modelo:</strong>
+                            <div class="markdown-content">{{ message.content }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Footer -->
+        <div class="chat-footer">
+            <form method="post" id="chat-form" class="d-flex">
+                <textarea id="user-input" name="user_input" class="form-control" placeholder="Digite sua pergunta..." required></textarea>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Markdown-it JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.3.2/markdown-it.min.js"></script>
+    <!-- Highlight.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>
+        // Função para renderizar Markdown e realce de código
+        function renderMarkdown() {
+            const md = window.markdownit({
+                highlight: function (str, lang) {
+                    if (lang && window.hljs.getLanguage(lang)) {
+                        try {
+                            return window.hljs.highlight(str, { language: lang }).value;
+                        } catch (__) {}
+                    }
+                    return ''; // Caso nenhuma linguagem seja detectada
+                }
+            });
+            const elements = document.querySelectorAll('.markdown-content');
+            elements.forEach(element => {
+                const rawContent = element.innerText || element.textContent;
+                element.innerHTML = md.render(rawContent);
+            });
+        }
+
+        // Renderiza Markdown na inicialização
+        renderMarkdown();
+
+        // Submete o formulário com Enter
+        const form = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        form.addEventListener('submit', function (event) {
+            if (!userInput.value.trim()) {
+                event.preventDefault();
+            }
+        });
+        userInput.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                form.submit();
+            }
+        });
+
+        // Rola automaticamente para a última mensagem
+        const chatBody = document.getElementById('chat-body');
+        chatBody.scrollTop = chatBody.scrollHeight;
+    </script>
+</body>
+</html>
