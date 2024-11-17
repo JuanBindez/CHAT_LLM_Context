@@ -16,6 +16,9 @@
 #### Run the App
     python3 main.py
 
+![image](https://github.com/user-attachments/assets/9d93c464-d5e0-45c7-b279-bd22e347fcf2)
+
+![Captura de tela de 2024-11-17 18-35-57](https://github.com/user-attachments/assets/692749a8-d785-478e-9020-b7d985f4d32d)
 
 ## Deployment
 
